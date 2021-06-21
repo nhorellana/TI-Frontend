@@ -55,6 +55,13 @@ const CardContent = styled(MuiCardContent)`
 
 const Typography = styled(MuiTypography)(spacing);
 
+const space = {
+  general: "3%",
+  pulmon: "0%",
+  recepcion: "0,82%",
+  despacho: "0%",
+};
+
 function Bodega({ title, description, almacen }) {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
@@ -92,7 +99,8 @@ function Bodega({ title, description, almacen }) {
         <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Acá aparecé el listado de SKU's con la cantidad respectiva
+            Acá aparecé el listado de SKU's con la cantidad respectiva.
+            Ocupación de bodega: {space[title]}
           </DialogContentText>
           <List className={classes.root}>
             {almacen && almacen.length > 0 ? (
