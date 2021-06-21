@@ -161,32 +161,45 @@ const data_stock = [
 // }
 
 function Dashboard() {
-  const [apiResponse, setResponse] = useState({});
-  const [isLoading, setLoading] = useState(false);
+  const [bodegaResponse, setResponseBodega] = useState({});
+  const [stocksResponse, setResponseStocks] = useState({});
+  const [isLoading1, setLoading1] = useState(true);
+  const [isLoading2, setLoading2] = useState(true);
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://aysen3.ing.puc.cl/api/status-info", {
-  //       headers: { "Content-Type": "application/json" },
-  //     })
-  //     .then(
-  //       ((response) => {
-  //         console.log(response.data);
-  //       }).catch((error) => {
-  //         console.log(error);
-  //       })
-  //     );
-  // Request.requestBodegaData()
-  //   .then((response) => {
-  //     setResponse(response);
-  //     setLoading(false);
-  //   })
-  //   .catch((e) => {
-  //     console.log("Error as: " + e);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios
+      .get("http://aysen3.ing.puc.cl/api/status-info", {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("Data de bodega: " + JSON.stringify(response.data));
+        setResponseBodega(response.data);
+        setLoading1(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .get("http://aysen3.ing.puc.cl/api/stocks", {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("Data de stocks: " + JSON.stringify(response.data));
+        setResponseStocks(response.data);
+        setLoading2(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // Request.requestBodegaData()
+    //   .then((response) => {
+    //   })
+    //   .catch((e) => {
+    //     console.log("Error as: " + e);
+    //   });
+  }, []);
 
-  if (isLoading) {
+  if (isLoading1 || isLoading2) {
     return (
       <Typography variant="h3" gutterBottom>
         Cargando...
@@ -219,12 +232,12 @@ function Dashboard() {
           </Typography>
         </Grid>
         <Grid item xs={12} lg={12}>
-          <Bodegas bodega_data={data_bodega} />
+          <Bodegas bodega_data={bodegaResponse} />
         </Grid>
       </Grid>
       <Grid container spacing={12}>
         <Grid item xs={12} lg={12}>
-          <SkuTable rows={data_stock} />
+          <SkuTable rows={stocksResponse} />
         </Grid>
       </Grid>
     </React.Fragment>
