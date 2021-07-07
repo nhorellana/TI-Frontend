@@ -581,4 +581,4 @@ export const presentationLayoutRoutes = [landingRoutes];
 export const protectedRoutes = [protectedPageRoutes];
 
 // Routes visible in the sidebar
-export const sidebarRoutes = [dashboardDefaultRoute, invoiceRoutes, formRoutes];
+export const sidebarRoutes = [dashboardDefaultRoute];

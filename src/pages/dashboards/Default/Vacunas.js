@@ -39,24 +39,19 @@ const TableWrapper = styled.div`
 
 // Data
 
-const rows = {
-  "60caa3af31df040004e88dfa": { 107: 24, 113: 72, 121: 16 },
-  "60caa3af31df040004e88df7": { 108: 30, 121: 8, 126: 10 },
-  "60caa3af31df040004e88dfb": { 121: 30, 107: 15, 108: 30, 113: 25 },
-  "60caa3af31df040004e88def": { 108: 18 },
-  "60caa3af31df040004e88dee": { 121: 24, 126: 12, 108: 12 },
-  "60caa3af31df040004e88de4": { 108: 6, 126: 4 },
-  "60caa3af31df040004e88dec": { 107: 49, 113: 36, 126: 80, 108: 36 },
-  "60caa3af31df040004e88df9": { 107: 24, 108: 18, 126: 12, 113: 22 },
-  "60caa3af31df040004e88de9": { 113: 6 },
-  "60caa3af31df040004e88df1": { 108: 36 },
-  "60caa3af31df040004e88df3": { 108: 42, 107: 12, 113: 28 },
-  "60caa3af31df040004e88deb": { 107: 16 },
-  "60caa3af31df040004e88de5": { 108: 8 },
-  "60caa3af31df040004e88df2": { 108: 6 },
+const rows = [
+  { sku: "10001", totalUnidades: 66 },
+  { sku: "10002", totalUnidades: 112 },
+  { sku: "10005", totalUnidades: 70 },
+];
+
+const nombre_vacunas = {
+  10001: "BNT162B2",
+  10002: "CORONAVAC",
+  10005: "mRNA-1273",
 };
 
-const Envios = () => (
+const Vacunass = () => (
   <Card mb={6}>
     <CardHeader
       action={
@@ -64,28 +59,28 @@ const Envios = () => (
           <MoreVertical />
         </IconButton>
       }
-      title="Latest products"
+      title="Vacunas producidas"
     />
     <Paper>
       <TableWrapper>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID Grupo</TableCell>
+              <TableCell>Nombre de vacuna</TableCell>
               <TableCell>SKU</TableCell>
-              <TableCell>Cantidad</TableCell>
+              <TableCell>Cantidad producida</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.keys(rows).map((e, i) => {
+            {rows.map((row) => (
               <TableRow>
                 <TableCell component="th" scope="row">
-                  {"titulo grupo"}
+                  {nombre_vacunas[row.sku]}
                 </TableCell>
-                <TableCell>{"sku"}</TableCell>
-                <TableCell>{"numero"}</TableCell>
-              </TableRow>;
-            })}
+                <TableCell>{row.sku}</TableCell>
+                <TableCell>{row.totalUnidades}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableWrapper>
@@ -93,4 +88,4 @@ const Envios = () => (
   </Card>
 );
 
-export default Envios;
+export default Vacunass;

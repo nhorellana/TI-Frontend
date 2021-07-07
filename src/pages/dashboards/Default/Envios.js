@@ -56,7 +56,7 @@ const rows = {
   "60caa3af31df040004e88df2": { 108: 6 },
 };
 
-const Envios = () => (
+const Envios = (data) => (
   <Card mb={6}>
     <CardHeader
       action={
@@ -64,7 +64,7 @@ const Envios = () => (
           <MoreVertical />
         </IconButton>
       }
-      title="Latest products"
+      title="Envíos Realizados"
     />
     <Paper>
       <TableWrapper>
@@ -77,15 +77,18 @@ const Envios = () => (
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.keys(rows).map((e, i) => {
-              <TableRow>
-                <TableCell component="th" scope="row">
-                  {"titulo grupo"}
-                </TableCell>
-                <TableCell>{"sku"}</TableCell>
-                <TableCell>{"numero"}</TableCell>
-              </TableRow>;
-            })}
+            {console.log("DATA: " + JSON.stringify(data.data))}
+            {Object.keys(data.data).map((row) =>
+              Object.keys(data.data[row]).map((detail) => (
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {row}
+                  </TableCell>
+                  <TableCell>{detail}</TableCell>
+                  <TableCell>{data.data[row][detail]}</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableWrapper>

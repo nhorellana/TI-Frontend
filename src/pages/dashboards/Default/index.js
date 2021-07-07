@@ -18,6 +18,8 @@ import { green, red } from "@material-ui/core/colors";
 
 import SkuTable from "./Table";
 import Request from "../../../services/requests";
+import Envios from "./Envios";
+import Vacunass from "./Vacunas";
 
 const Divider = styled(MuiDivider)(spacing);
 const Typography = styled(MuiTypography)(spacing);
@@ -163,8 +165,12 @@ const data_stock = [
 function Dashboard() {
   const [bodegaResponse, setResponseBodega] = useState({});
   const [stocksResponse, setResponseStocks] = useState({});
+  const [almacenResponse, setResponseAlmacen] = useState({});
+  const [enviosResponse, setResponseEnvios] = useState({});
   const [isLoading1, setLoading1] = useState(true);
   const [isLoading2, setLoading2] = useState(true);
+  const [isLoading3, setLoading3] = useState(true);
+  const [isLoading4, setLoading4] = useState(true);
 
   useEffect(() => {
     axios
@@ -191,6 +197,30 @@ function Dashboard() {
       .catch((error) => {
         console.log(error);
       });
+    axios
+      .get("http://aysen3.ing.puc.cl/api/cargar-datos-bodegas", {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("Data de almacen: " + JSON.stringify(response.data));
+        setResponseAlmacen(response.data);
+        setLoading3(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .get("http://aysen3.ing.puc.cl/api/ordenes-listas", {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("Data de OC: " + JSON.stringify(response.data));
+        setResponseEnvios(response.data);
+        setLoading4(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     // Request.requestBodegaData()
     //   .then((response) => {
     //   })
@@ -199,7 +229,7 @@ function Dashboard() {
     //   });
   }, []);
 
-  if (isLoading1 || isLoading2) {
+  if (isLoading1 || isLoading2 || isLoading3 || isLoading4) {
     return (
       <Typography variant="h3" gutterBottom>
         Cargando...
@@ -222,9 +252,7 @@ function Dashboard() {
         </Grid>
         <Divider my={6} />
       </Grid>
-
       <Divider my={6} />
-
       <Grid container spacing={6}>
         <Grid item>
           <Typography variant="h5" gutterBottom>
@@ -232,12 +260,22 @@ function Dashboard() {
           </Typography>
         </Grid>
         <Grid item xs={12} lg={12}>
-          <Bodegas bodega_data={bodegaResponse} />
+          <Bodegas bodega_data={bodegaResponse} nro_almacen={almacenResponse} />
         </Grid>
       </Grid>
       <Grid container spacing={12}>
         <Grid item xs={12} lg={12}>
           <SkuTable rows={stocksResponse} />
+        </Grid>
+      </Grid>
+      <Grid container spacing={12}>
+        <Grid item xs={12} lg={12}>
+          <Vacunass />
+        </Grid>
+      </Grid>
+      <Grid container spacing={12}>
+        <Grid item xs={12} lg={12}>
+          <Envios data={enviosResponse} />
         </Grid>
       </Grid>
     </React.Fragment>

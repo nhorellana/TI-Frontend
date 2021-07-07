@@ -82,7 +82,7 @@ function SkuTable(data) {
               <TableBody>
                 {rows.map((row) => (
                   <TableRow>
-                    <TableCell>{row._id}</TableCell>
+                    <TableCell>{row.sku}</TableCell>
                     <TableCell>{row.total}</TableCell>
                   </TableRow>
                 ))}

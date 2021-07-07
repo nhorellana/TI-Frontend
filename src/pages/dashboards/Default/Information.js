@@ -62,7 +62,7 @@ const space = {
   despacho: "0%",
 };
 
-function Bodega({ title, description, almacen }) {
+function Bodega({ title, description, almacen, nro_almacen }) {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
@@ -100,7 +100,10 @@ function Bodega({ title, description, almacen }) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Acá aparecé el listado de SKU's con la cantidad respectiva.
-            Ocupación de bodega: {space[title]}
+            Ocupación de bodega:{" "}
+            {(
+              nro_almacen[title].usedSpace / nro_almacen[title].totalSpace
+            ).toFixed(2)}
           </DialogContentText>
           <List className={classes.root}>
             {almacen && almacen.length > 0 ? (
@@ -132,6 +135,7 @@ function Bodega({ title, description, almacen }) {
 
 function Bodegas(props) {
   const bodega_data = props.bodega_data;
+  const nro_almacen = props.nro_almacen;
 
   return (
     <React.Fragment>
@@ -139,7 +143,12 @@ function Bodegas(props) {
         {Object.keys(bodega_data).map(function (key) {
           return (
             <Grid item xs={12} lg={6} xl={3}>
-              <Bodega title={key} description="" almacen={bodega_data[key]} />
+              <Bodega
+                title={key}
+                description=""
+                almacen={bodega_data[key]}
+                nro_almacen={nro_almacen}
+              />
             </Grid>
           );
         })}
